@@ -3,7 +3,9 @@ package json2pojo;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Scanner;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.jsonschema2pojo.AnnotationStyle;
 import org.jsonschema2pojo.DefaultGenerationConfig;
@@ -21,7 +23,6 @@ public class PojoGenerator {
 
     static JCodeModel codeModel = new JCodeModel();
     static File input = new File("input");
-    static File output = new File(new File("output"), "dto");
 
     static GenerationConfig config = new DefaultGenerationConfig() {
 
@@ -89,27 +90,75 @@ public class PojoGenerator {
     static SchemaMapper mapper = new SchemaMapper(new RuleFactory(config, new GsonAnnotator(), new SchemaStore()),
 	    new SchemaGenerator());
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-	output.mkdirs();
-	output.mkdir();
+	// greet and ask the project name (will be used for output dir)
+	System.out.println("Welcome to json2pojo! Please enter the name of the current project...");
+	Scanner in = new Scanner(System.in);
+	String projectName = in.nextLine();
 
-	for (File file : input.listFiles()) {
-	    if (file.isFile()) {
-		generatePojos(file);
+	// print the output directory
+	File output = new File(new File("output"), projectName);
+	System.out.println("Output path will be: " + output.getAbsolutePath());
+
+	// ask the user if we should clear out the output directory
+	String proceed;
+	do {
+	    System.out.println("Do you want to clear the output directory? (Y/N)...");
+	    proceed = in.nextLine();
+	} while (!proceed.equalsIgnoreCase("Y") && !proceed.equalsIgnoreCase("N"));
+
+	// done taking input
+	in.close();
+
+	// clear the output directory if it exists
+	if (proceed.equalsIgnoreCase("Y")) {
+	    if (output.exists()) {
+		try {
+		    FileUtils.cleanDirectory(output);
+		} catch (IOException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
 	    }
 	}
 
+	// create the output directory
+	output.mkdirs();
+	output.mkdir();
+
+	// for each file in the input directory
+	for (File file : input.listFiles()) {
+	    // if the file is a file (not a directory)
+	    if (file.isFile()) {
+		// try to generate pojos
+		try {
+		    generatePojos(file, output);
+		} catch (IOException e) {
+		    System.out.println("Error on file: " + file.getAbsolutePath());
+		    e.printStackTrace();
+		}
+	    }
+	}
     }
 
-    static void generatePojos(File file) throws IOException {
+    /**
+     * Takes a JSON file, converts it to a POJO, and saves it to the specified
+     * directory
+     * 
+     * @param file
+     *            The file to be convered (.json or .txt)
+     * @param output
+     *            The output directory
+     * @throws IOException
+     */
+    static void generatePojos(File file, File output) throws IOException {
 
 	String baseName = FilenameUtils.getBaseName(file.getAbsolutePath());
-
-	URL url = file.toURI().toURL();
 	String subPackage = baseName.toLowerCase();
-	mapper.generate(codeModel, baseName, subPackage, url);
+	URL url = file.toURI().toURL();
 
+	mapper.generate(codeModel, baseName, subPackage, url);
 	codeModel.build(output);
     }
 
