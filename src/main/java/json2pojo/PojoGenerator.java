@@ -102,10 +102,7 @@ public class PojoGenerator {
 		Scanner in = new Scanner(System.in);
 		pkg = in.nextLine();
 
-		// print the output directory
-		//File output = new File(new File("output"), pkg.replace(".", "/"));
 		File output = new File("output");
-		//System.out.println("Output path will be: " + output.getAbsolutePath());
 
 		// ask the user if we should clear out the output directory
 		String proceed;
@@ -135,8 +132,16 @@ public class PojoGenerator {
 
 		// for each file in the input directory
 		for (File file : input.listFiles()) {
+			
 			// if the file is a file (not a directory)
 			if (file.isFile()) {
+				
+				// ignore .DS_Store on Mac
+				String ext = FilenameUtils.getExtension(file.getName());
+				if (ext.equalsIgnoreCase("ds_store")) {
+					continue;
+				}
+				
 				// try to generate pojos
 				try {
 					generatePojos(file, output);
