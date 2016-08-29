@@ -8,6 +8,7 @@ import java.util.Scanner;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.jsonschema2pojo.AnnotationStyle;
+import org.jsonschema2pojo.Annotator;
 import org.jsonschema2pojo.DefaultGenerationConfig;
 import org.jsonschema2pojo.GenerationConfig;
 import org.jsonschema2pojo.GsonAnnotator;
@@ -21,145 +22,150 @@ import com.sun.codemodel.JCodeModel;
 
 public class PojoGenerator {
 
-    static JCodeModel codeModel = new JCodeModel();
-    static File input = new File("input");
+	static AnnotationStyle annotationStyle = AnnotationStyle.GSON;
+	static Annotator annotator = new GsonAnnotator();
 
-    static GenerationConfig config = new DefaultGenerationConfig() {
+	static JCodeModel codeModel = new JCodeModel();
+	static File input = new File("input");
+	static String pkg;
 
-	@Override
-	public boolean isGenerateBuilders() {
-	    return true;
-	}
+	static GenerationConfig config = new DefaultGenerationConfig() {
 
-	@Override
-	public boolean isIncludeHashcodeAndEquals() {
-	    return true;
-	}
-
-	@Override
-	public boolean isIncludeToString() {
-	    return true;
-	}
-
-	@Override
-	public boolean isUseCommonsLang3() {
-	    return true;
-	}
-
-	@Override
-	public boolean isParcelable() {
-	    return true;
-	}
-
-	@Override
-	public boolean isSerializable() {
-	    return true;
-	}
-
-	@Override
-	public boolean isIncludeConstructors() {
-	    return true;
-	}
-
-	@Override
-	public boolean isIncludeAdditionalProperties() {
-	    return true;
-	}
-
-	@Override
-	public boolean isIncludeAccessors() {
-	    return true;
-	}
-
-	@Override
-	public AnnotationStyle getAnnotationStyle() {
-	    return AnnotationStyle.GSON;
-	}
-
-	@Override
-	public SourceType getSourceType() {
-	    return SourceType.JSON;
-	}
-
-	@Override
-	public boolean isUseBigDecimals() {
-	    return true;
-	}
-    };
-
-    static SchemaMapper mapper = new SchemaMapper(new RuleFactory(config, new GsonAnnotator(), new SchemaStore()),
-	    new SchemaGenerator());
-
-    public static void main(String[] args) {
-
-	// greet and ask the project name (will be used for output dir)
-	System.out.println("Welcome to json2pojo! Please enter the name of the current project...");
-	Scanner in = new Scanner(System.in);
-	String projectName = in.nextLine();
-
-	// print the output directory
-	File output = new File(new File("output"), projectName);
-	System.out.println("Output path will be: " + output.getAbsolutePath());
-
-	// ask the user if we should clear out the output directory
-	String proceed;
-	do {
-	    System.out.println("Do you want to clear the output directory? (Y/N)...");
-	    proceed = in.nextLine();
-	} while (!proceed.equalsIgnoreCase("Y") && !proceed.equalsIgnoreCase("N"));
-
-	// done taking input
-	in.close();
-
-	// clear the output directory if it exists
-	if (proceed.equalsIgnoreCase("Y")) {
-	    if (output.exists()) {
-		try {
-		    FileUtils.cleanDirectory(output);
-		} catch (IOException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
+		@Override
+		public boolean isGenerateBuilders() {
+			return true;
 		}
-	    }
-	}
 
-	// create the output directory
-	output.mkdirs();
-	output.mkdir();
-
-	// for each file in the input directory
-	for (File file : input.listFiles()) {
-	    // if the file is a file (not a directory)
-	    if (file.isFile()) {
-		// try to generate pojos
-		try {
-		    generatePojos(file, output);
-		} catch (IOException e) {
-		    System.out.println("Error on file: " + file.getAbsolutePath());
-		    e.printStackTrace();
+		@Override
+		public boolean isIncludeHashcodeAndEquals() {
+			return true;
 		}
-	    }
+
+		@Override
+		public boolean isIncludeToString() {
+			return true;
+		}
+
+		@Override
+		public boolean isUseCommonsLang3() {
+			return true;
+		}
+
+		@Override
+		public boolean isParcelable() {
+			return true;
+		}
+
+		@Override
+		public boolean isSerializable() {
+			return true;
+		}
+
+		@Override
+		public boolean isIncludeConstructors() {
+			return true;
+		}
+
+		@Override
+		public boolean isIncludeAdditionalProperties() {
+			return true;
+		}
+
+		@Override
+		public boolean isIncludeAccessors() {
+			return true;
+		}
+
+		@Override
+		public AnnotationStyle getAnnotationStyle() {
+			return AnnotationStyle.GSON;
+		}
+
+		@Override
+		public SourceType getSourceType() {
+			return SourceType.JSON;
+		}
+
+		@Override
+		public boolean isUseBigDecimals() {
+			return true;
+		}
+	};
+
+	static SchemaMapper mapper = new SchemaMapper(new RuleFactory(config, annotator, new SchemaStore()),
+			new SchemaGenerator());
+
+	public static void main(String[] args) {
+
+		// greet and ask the project name (will be used for output dir)
+		System.out.println("Welcome to json2pojo! Please enter the DTO package...");
+		Scanner in = new Scanner(System.in);
+		pkg = in.nextLine();
+
+		// print the output directory
+		//File output = new File(new File("output"), pkg.replace(".", "/"));
+		File output = new File("output");
+		//System.out.println("Output path will be: " + output.getAbsolutePath());
+
+		// ask the user if we should clear out the output directory
+		String proceed;
+		do {
+			System.out.println("Do you want to clear the output directory? (Y/N)...");
+			proceed = in.nextLine();
+		} while (!proceed.equalsIgnoreCase("Y") && !proceed.equalsIgnoreCase("N"));
+
+		// done taking input
+		in.close();
+
+		// clear the output directory if it exists
+		if (proceed.equalsIgnoreCase("Y")) {
+			if (output.exists()) {
+				try {
+					FileUtils.cleanDirectory(output);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+		// create the output directory
+		output.mkdirs();
+		output.mkdir();
+
+		// for each file in the input directory
+		for (File file : input.listFiles()) {
+			// if the file is a file (not a directory)
+			if (file.isFile()) {
+				// try to generate pojos
+				try {
+					generatePojos(file, output);
+				} catch (Exception e) {
+					System.out.println("Error on file: " + file.getAbsolutePath());
+					e.printStackTrace();
+				}
+			}
+		}
 	}
-    }
 
-    /**
-     * Takes a JSON file, converts it to a POJO, and saves it to the specified
-     * directory
-     * 
-     * @param file
-     *            The file to be convered (.json or .txt)
-     * @param output
-     *            The output directory
-     * @throws IOException
-     */
-    static void generatePojos(File file, File output) throws IOException {
+	/**
+	 * Takes a JSON file, converts it to a POJO, and saves it to the specified
+	 * directory
+	 * 
+	 * @param file
+	 *            The file to be converted (.json or .txt)
+	 * @param output
+	 *            The output directory
+	 * @throws IOException
+	 */
+	static void generatePojos(File file, File output) throws IOException {
 
-	String baseName = FilenameUtils.getBaseName(file.getAbsolutePath());
-	String subPackage = baseName.toLowerCase();
-	URL url = file.toURI().toURL();
+		String baseName = FilenameUtils.getBaseName(file.getAbsolutePath());
+		String packageName = pkg + "." + baseName.toLowerCase();
+		URL url = file.toURI().toURL();
 
-	mapper.generate(codeModel, baseName, subPackage, url);
-	codeModel.build(output);
-    }
+		mapper.generate(codeModel, baseName, packageName, url);
+		codeModel.build(output);
+	}
 
 }

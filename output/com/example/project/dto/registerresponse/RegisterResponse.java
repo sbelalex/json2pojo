@@ -1,5 +1,5 @@
 
-package loginresponse;
+package com.example.project.dto.registerresponse;
 
 import java.io.Serializable;
 import javax.annotation.Generated;
@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Generated("org.jsonschema2pojo")
-public class LoginResponse implements Serializable, Parcelable
+public class RegisterResponse implements Serializable, Parcelable
 {
 
     @SerializedName("type")
@@ -22,40 +22,40 @@ public class LoginResponse implements Serializable, Parcelable
     @SerializedName("properties")
     @Expose
     private Properties properties;
-    public final static Parcelable.Creator<LoginResponse> CREATOR = new Creator<LoginResponse>() {
+    public final static Parcelable.Creator<RegisterResponse> CREATOR = new Creator<RegisterResponse>() {
 
 
         @SuppressWarnings({
             "unchecked"
         })
-        public LoginResponse createFromParcel(Parcel in) {
-            LoginResponse instance = new LoginResponse();
+        public RegisterResponse createFromParcel(Parcel in) {
+            RegisterResponse instance = new RegisterResponse();
             instance.type = ((String) in.readValue((String.class.getClassLoader())));
             instance.properties = ((Properties) in.readValue((Properties.class.getClassLoader())));
             return instance;
         }
 
-        public LoginResponse[] newArray(int size) {
-            return (new LoginResponse[size]);
+        public RegisterResponse[] newArray(int size) {
+            return (new RegisterResponse[size]);
         }
 
     }
     ;
-    private final static long serialVersionUID = 7377511096758767369L;
+    private final static long serialVersionUID = -1079644307490681433L;
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public LoginResponse() {
+    public RegisterResponse() {
     }
 
     /**
      * 
-     * @param type
      * @param properties
+     * @param type
      */
-    public LoginResponse(String type, Properties properties) {
+    public RegisterResponse(String type, Properties properties) {
         super();
         this.type = type;
         this.properties = properties;
@@ -79,7 +79,7 @@ public class LoginResponse implements Serializable, Parcelable
         this.type = type;
     }
 
-    public LoginResponse withType(String type) {
+    public RegisterResponse withType(String type) {
         this.type = type;
         return this;
     }
@@ -102,7 +102,7 @@ public class LoginResponse implements Serializable, Parcelable
         this.properties = properties;
     }
 
-    public LoginResponse withProperties(Properties properties) {
+    public RegisterResponse withProperties(Properties properties) {
         this.properties = properties;
         return this;
     }
@@ -122,10 +122,10 @@ public class LoginResponse implements Serializable, Parcelable
         if (other == this) {
             return true;
         }
-        if ((other instanceof LoginResponse) == false) {
+        if ((other instanceof RegisterResponse) == false) {
             return false;
         }
-        LoginResponse rhs = ((LoginResponse) other);
+        RegisterResponse rhs = ((RegisterResponse) other);
         return new EqualsBuilder().append(type, rhs.type).append(properties, rhs.properties).isEquals();
     }
 

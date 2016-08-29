@@ -1,5 +1,5 @@
 
-package loginresponse;
+package com.example.project.dto.registerresponse;
 
 import java.io.Serializable;
 import javax.annotation.Generated;
@@ -45,7 +45,7 @@ public class Properties implements Serializable, Parcelable
 
     }
     ;
-    private final static long serialVersionUID = -8279907424960745012L;
+    private final static long serialVersionUID = -8086540711159763862L;
 
     /**
      * No args constructor for use in serialization
@@ -56,9 +56,9 @@ public class Properties implements Serializable, Parcelable
 
     /**
      * 
-     * @param bar
-     * @param foo
      * @param baz
+     * @param foo
+     * @param bar
      */
     public Properties(Foo foo, Bar bar, Baz baz) {
         super();

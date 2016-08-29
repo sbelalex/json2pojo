@@ -1,5 +1,5 @@
 
-package registerrequest;
+package com.example.project.dto.loginresponse;
 
 import java.io.Serializable;
 import javax.annotation.Generated;
@@ -13,46 +13,52 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Generated("org.jsonschema2pojo")
-public class Bar implements Serializable, Parcelable
+public class LoginResponse implements Serializable, Parcelable
 {
 
     @SerializedName("type")
     @Expose
     private String type;
-    public final static Parcelable.Creator<Bar> CREATOR = new Creator<Bar>() {
+    @SerializedName("properties")
+    @Expose
+    private Properties properties;
+    public final static Parcelable.Creator<LoginResponse> CREATOR = new Creator<LoginResponse>() {
 
 
         @SuppressWarnings({
             "unchecked"
         })
-        public Bar createFromParcel(Parcel in) {
-            Bar instance = new Bar();
+        public LoginResponse createFromParcel(Parcel in) {
+            LoginResponse instance = new LoginResponse();
             instance.type = ((String) in.readValue((String.class.getClassLoader())));
+            instance.properties = ((Properties) in.readValue((Properties.class.getClassLoader())));
             return instance;
         }
 
-        public Bar[] newArray(int size) {
-            return (new Bar[size]);
+        public LoginResponse[] newArray(int size) {
+            return (new LoginResponse[size]);
         }
 
     }
     ;
-    private final static long serialVersionUID = 1202120547216367815L;
+    private final static long serialVersionUID = -4699495111393486149L;
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public Bar() {
+    public LoginResponse() {
     }
 
     /**
      * 
+     * @param properties
      * @param type
      */
-    public Bar(String type) {
+    public LoginResponse(String type, Properties properties) {
         super();
         this.type = type;
+        this.properties = properties;
     }
 
     /**
@@ -73,8 +79,31 @@ public class Bar implements Serializable, Parcelable
         this.type = type;
     }
 
-    public Bar withType(String type) {
+    public LoginResponse withType(String type) {
         this.type = type;
+        return this;
+    }
+
+    /**
+     * 
+     * @return
+     *     The properties
+     */
+    public Properties getProperties() {
+        return properties;
+    }
+
+    /**
+     * 
+     * @param properties
+     *     The properties
+     */
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
+    public LoginResponse withProperties(Properties properties) {
+        this.properties = properties;
         return this;
     }
 
@@ -85,7 +114,7 @@ public class Bar implements Serializable, Parcelable
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(type).toHashCode();
+        return new HashCodeBuilder().append(type).append(properties).toHashCode();
     }
 
     @Override
@@ -93,15 +122,16 @@ public class Bar implements Serializable, Parcelable
         if (other == this) {
             return true;
         }
-        if ((other instanceof Bar) == false) {
+        if ((other instanceof LoginResponse) == false) {
             return false;
         }
-        Bar rhs = ((Bar) other);
-        return new EqualsBuilder().append(type, rhs.type).isEquals();
+        LoginResponse rhs = ((LoginResponse) other);
+        return new EqualsBuilder().append(type, rhs.type).append(properties, rhs.properties).isEquals();
     }
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(type);
+        dest.writeValue(properties);
     }
 
     public int describeContents() {

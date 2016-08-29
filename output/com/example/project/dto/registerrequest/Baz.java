@@ -1,5 +1,5 @@
 
-package registerrequest;
+package com.example.project.dto.registerrequest;
 
 import java.io.Serializable;
 import javax.annotation.Generated;
@@ -37,7 +37,7 @@ public class Baz implements Serializable, Parcelable
 
     }
     ;
-    private final static long serialVersionUID = 5953057367877319208L;
+    private final static long serialVersionUID = -8678262163187923895L;
 
     /**
      * No args constructor for use in serialization

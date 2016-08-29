@@ -1,5 +1,5 @@
 
-package loginresponse;
+package com.example.project.dto.loginrequest;
 
 import java.io.Serializable;
 import javax.annotation.Generated;
@@ -13,44 +13,44 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Generated("org.jsonschema2pojo")
-public class Bar implements Serializable, Parcelable
+public class Foo implements Serializable, Parcelable
 {
 
     @SerializedName("type")
     @Expose
     private String type;
-    public final static Parcelable.Creator<Bar> CREATOR = new Creator<Bar>() {
+    public final static Parcelable.Creator<Foo> CREATOR = new Creator<Foo>() {
 
 
         @SuppressWarnings({
             "unchecked"
         })
-        public Bar createFromParcel(Parcel in) {
-            Bar instance = new Bar();
+        public Foo createFromParcel(Parcel in) {
+            Foo instance = new Foo();
             instance.type = ((String) in.readValue((String.class.getClassLoader())));
             return instance;
         }
 
-        public Bar[] newArray(int size) {
-            return (new Bar[size]);
+        public Foo[] newArray(int size) {
+            return (new Foo[size]);
         }
 
     }
     ;
-    private final static long serialVersionUID = 3472398452536290118L;
+    private final static long serialVersionUID = 5828525974433812299L;
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public Bar() {
+    public Foo() {
     }
 
     /**
      * 
      * @param type
      */
-    public Bar(String type) {
+    public Foo(String type) {
         super();
         this.type = type;
     }
@@ -73,7 +73,7 @@ public class Bar implements Serializable, Parcelable
         this.type = type;
     }
 
-    public Bar withType(String type) {
+    public Foo withType(String type) {
         this.type = type;
         return this;
     }
@@ -93,10 +93,10 @@ public class Bar implements Serializable, Parcelable
         if (other == this) {
             return true;
         }
-        if ((other instanceof Bar) == false) {
+        if ((other instanceof Foo) == false) {
             return false;
         }
-        Bar rhs = ((Bar) other);
+        Foo rhs = ((Foo) other);
         return new EqualsBuilder().append(type, rhs.type).isEquals();
     }
 

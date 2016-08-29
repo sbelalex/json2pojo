@@ -1,5 +1,5 @@
 
-package loginrequest;
+package com.example.project.dto.loginrequest;
 
 import java.io.Serializable;
 import javax.annotation.Generated;
@@ -13,46 +13,52 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Generated("org.jsonschema2pojo")
-public class Baz implements Serializable, Parcelable
+public class LoginRequest implements Serializable, Parcelable
 {
 
     @SerializedName("type")
     @Expose
     private String type;
-    public final static Parcelable.Creator<Baz> CREATOR = new Creator<Baz>() {
+    @SerializedName("properties")
+    @Expose
+    private Properties properties;
+    public final static Parcelable.Creator<LoginRequest> CREATOR = new Creator<LoginRequest>() {
 
 
         @SuppressWarnings({
             "unchecked"
         })
-        public Baz createFromParcel(Parcel in) {
-            Baz instance = new Baz();
+        public LoginRequest createFromParcel(Parcel in) {
+            LoginRequest instance = new LoginRequest();
             instance.type = ((String) in.readValue((String.class.getClassLoader())));
+            instance.properties = ((Properties) in.readValue((Properties.class.getClassLoader())));
             return instance;
         }
 
-        public Baz[] newArray(int size) {
-            return (new Baz[size]);
+        public LoginRequest[] newArray(int size) {
+            return (new LoginRequest[size]);
         }
 
     }
     ;
-    private final static long serialVersionUID = -9196568436834246428L;
+    private final static long serialVersionUID = 1646669448555723502L;
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public Baz() {
+    public LoginRequest() {
     }
 
     /**
      * 
+     * @param properties
      * @param type
      */
-    public Baz(String type) {
+    public LoginRequest(String type, Properties properties) {
         super();
         this.type = type;
+        this.properties = properties;
     }
 
     /**
@@ -73,8 +79,31 @@ public class Baz implements Serializable, Parcelable
         this.type = type;
     }
 
-    public Baz withType(String type) {
+    public LoginRequest withType(String type) {
         this.type = type;
+        return this;
+    }
+
+    /**
+     * 
+     * @return
+     *     The properties
+     */
+    public Properties getProperties() {
+        return properties;
+    }
+
+    /**
+     * 
+     * @param properties
+     *     The properties
+     */
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
+    public LoginRequest withProperties(Properties properties) {
+        this.properties = properties;
         return this;
     }
 
@@ -85,7 +114,7 @@ public class Baz implements Serializable, Parcelable
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(type).toHashCode();
+        return new HashCodeBuilder().append(type).append(properties).toHashCode();
     }
 
     @Override
@@ -93,15 +122,16 @@ public class Baz implements Serializable, Parcelable
         if (other == this) {
             return true;
         }
-        if ((other instanceof Baz) == false) {
+        if ((other instanceof LoginRequest) == false) {
             return false;
         }
-        Baz rhs = ((Baz) other);
-        return new EqualsBuilder().append(type, rhs.type).isEquals();
+        LoginRequest rhs = ((LoginRequest) other);
+        return new EqualsBuilder().append(type, rhs.type).append(properties, rhs.properties).isEquals();
     }
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(type);
+        dest.writeValue(properties);
     }
 
     public int describeContents() {

@@ -1,5 +1,5 @@
 
-package registerresponse;
+package com.example.project.dto.loginrequest;
 
 import java.io.Serializable;
 import javax.annotation.Generated;
@@ -13,52 +13,46 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Generated("org.jsonschema2pojo")
-public class RegisterResponse implements Serializable, Parcelable
+public class Baz implements Serializable, Parcelable
 {
 
     @SerializedName("type")
     @Expose
     private String type;
-    @SerializedName("properties")
-    @Expose
-    private Properties properties;
-    public final static Parcelable.Creator<RegisterResponse> CREATOR = new Creator<RegisterResponse>() {
+    public final static Parcelable.Creator<Baz> CREATOR = new Creator<Baz>() {
 
 
         @SuppressWarnings({
             "unchecked"
         })
-        public RegisterResponse createFromParcel(Parcel in) {
-            RegisterResponse instance = new RegisterResponse();
+        public Baz createFromParcel(Parcel in) {
+            Baz instance = new Baz();
             instance.type = ((String) in.readValue((String.class.getClassLoader())));
-            instance.properties = ((Properties) in.readValue((Properties.class.getClassLoader())));
             return instance;
         }
 
-        public RegisterResponse[] newArray(int size) {
-            return (new RegisterResponse[size]);
+        public Baz[] newArray(int size) {
+            return (new Baz[size]);
         }
 
     }
     ;
-    private final static long serialVersionUID = 6278191033612612202L;
+    private final static long serialVersionUID = -5054834145972851253L;
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public RegisterResponse() {
+    public Baz() {
     }
 
     /**
      * 
      * @param type
-     * @param properties
      */
-    public RegisterResponse(String type, Properties properties) {
+    public Baz(String type) {
         super();
         this.type = type;
-        this.properties = properties;
     }
 
     /**
@@ -79,31 +73,8 @@ public class RegisterResponse implements Serializable, Parcelable
         this.type = type;
     }
 
-    public RegisterResponse withType(String type) {
+    public Baz withType(String type) {
         this.type = type;
-        return this;
-    }
-
-    /**
-     * 
-     * @return
-     *     The properties
-     */
-    public Properties getProperties() {
-        return properties;
-    }
-
-    /**
-     * 
-     * @param properties
-     *     The properties
-     */
-    public void setProperties(Properties properties) {
-        this.properties = properties;
-    }
-
-    public RegisterResponse withProperties(Properties properties) {
-        this.properties = properties;
         return this;
     }
 
@@ -114,7 +85,7 @@ public class RegisterResponse implements Serializable, Parcelable
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(type).append(properties).toHashCode();
+        return new HashCodeBuilder().append(type).toHashCode();
     }
 
     @Override
@@ -122,16 +93,15 @@ public class RegisterResponse implements Serializable, Parcelable
         if (other == this) {
             return true;
         }
-        if ((other instanceof RegisterResponse) == false) {
+        if ((other instanceof Baz) == false) {
             return false;
         }
-        RegisterResponse rhs = ((RegisterResponse) other);
-        return new EqualsBuilder().append(type, rhs.type).append(properties, rhs.properties).isEquals();
+        Baz rhs = ((Baz) other);
+        return new EqualsBuilder().append(type, rhs.type).isEquals();
     }
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(type);
-        dest.writeValue(properties);
     }
 
     public int describeContents() {
