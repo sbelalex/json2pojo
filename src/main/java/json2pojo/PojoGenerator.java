@@ -78,7 +78,7 @@ public class PojoGenerator {
 
 		@Override
 		public AnnotationStyle getAnnotationStyle() {
-			return AnnotationStyle.GSON;
+			return annotationStyle;
 		}
 
 		@Override
